@@ -4,6 +4,8 @@ import Avater from "../components/Avater";
 import "./Chat.css";
 
 import ChatItem from "../components/ChatItem";
+import AddMamber from "../modals/AddMamber";
+import ManageMamber from "../modals/ManageMamber";
 
 import addIcon from "../assets/plus-lg.svg";
 import peopleIcon from "../assets/people.svg";
@@ -41,6 +43,9 @@ const Chat = () => {
 
   return (
     <div>
+      <AddMamber />
+      <ManageMamber />
+
       <div className="header">
         <Avater
           title="Friends Of Friends"
@@ -55,11 +60,19 @@ const Chat = () => {
         </div>
 
         <div className="buttons">
-          <div className="icon-btn">
+          <div
+            className="icon-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#addMamberModel"
+          >
             <img className="icon" alt="plus" src={addIcon} />
             <div className="text">Add Mamber</div>
           </div>
-          <div className="icon-btn">
+          <div
+            className="icon-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#manageMamberModel"
+          >
             <img className="icon" alt="people" src={peopleIcon} />
             <div className="text">Manage Mamber</div>
           </div>

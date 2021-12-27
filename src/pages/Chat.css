@@ -60,3 +60,35 @@
   bottom: 0;
   left: 0;
 }
+
+.user {
+  display: flex;
+  padding: 8px;
+}
+
+.user:hover {
+  background-color: #e9ecef;
+}
+
+.user .info {
+  width: 100%;
+}
+.user .name {
+  font-weight: bold;
+}
+.add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.add img:hover {
+  background-color: #e9ecef;
+}
