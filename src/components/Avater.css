@@ -1,0 +1,16 @@
+.Avater {
+  background-color: silver;
+  margin-right: 12px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 50px;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.Avater img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}

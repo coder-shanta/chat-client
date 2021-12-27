@@ -1,0 +1,28 @@
+.g-item {
+  display: flex;
+  padding: 12px;
+  background-color: #fff;
+  cursor: pointer;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.g-item:hover {
+  background-color: #e2e2e2;
+}
+
+.g-content {
+}
+
+.g-name {
+  font-weight: bold;
+}
+
+.g-mamber-mamber {
+  font-weight: 200;
+}
+.g-mamber-text {
+  font-weight: 100;
+}
