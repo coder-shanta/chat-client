@@ -1,0 +1,86 @@
+.chat {
+  display: flex;
+  margin: 60px 0;
+}
+
+.chat .message {
+  background-color: #ffffff;
+  position: relative;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  min-width: 200px;
+}
+
+.message::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  left: -5px;
+  top: 8px;
+  transform: rotate(45deg);
+  z-index: -1;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sender {
+  position: absolute;
+  top: -25px;
+  font-size: 13px;
+  font-weight: 100;
+}
+
+.date {
+  position: absolute;
+  right: 0;
+  bottom: -25px;
+  font-size: 13px;
+  font-weight: 100;
+}
+
+.my-chat {
+  display: flex;
+  flex-direction: row-reverse;
+
+  margin: 60px 0;
+}
+
+.my-chat .my-message {
+  background-color: #4c80aa;
+  position: relative;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  min-width: 200px;
+  margin-right: 12px;
+  color: white;
+}
+
+.my-message::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #4c80aa;
+  right: -5px;
+  top: 8px;
+  transform: rotate(45deg);
+  z-index: -1;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.my-sender {
+  position: absolute;
+  top: -25px;
+  font-size: 13px;
+  font-weight: 100;
+}
+
+.my-date {
+  position: absolute;
+  right: 0;
+  bottom: -25px;
+  font-size: 13px;
+  font-weight: 100;
+  color: black;
+}

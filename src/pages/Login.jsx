@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "../helper/axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Divider from "../components/Divider";
 import Loader from "../components/Loader";
 
 const Login = () => {
-  let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -29,7 +28,7 @@ const Login = () => {
 
         if (data.success === true) {
           localStorage.setItem("token", data.token);
-          navigate("/");
+          window.location.href = "/";
         } else {
           alert(data.message || "Login Failed. (Unknown error)");
         }
@@ -50,10 +49,10 @@ const Login = () => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-8 py-5">
+            <h1 className="mb-4 text-center">Group Chat app demo</h1>
+
             <div className="card shadow">
-              <div className="card-header">
-                <h5 className="card-title">Login</h5>
-              </div>
+              <div className="card-header">Login with email address</div>
 
               <div className="card-body">
                 <form onSubmit={handleSubmit}>

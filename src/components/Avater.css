@@ -6,6 +6,7 @@
   vertical-align: middle;
   line-height: 50px;
   font-weight: bold;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 25px;
 }
 

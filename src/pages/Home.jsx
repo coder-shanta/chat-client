@@ -1,5 +1,4 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import GroupCreator from "../components/GroupCreator";
 import GroupList from "../components/GroupList";
 
 const Home = () => {
@@ -9,18 +8,10 @@ const Home = () => {
   const content = (
     <div>
       <h1>Advanced Group Chat App</h1>
-
-      <div className="py-4">
-        <GroupCreator />
-      </div>
+      <p>To create a group, just type name and enter.</p>
 
       <GroupList />
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <br />
       <br />
 

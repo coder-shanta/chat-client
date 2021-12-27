@@ -49,3 +49,14 @@
   width: 25px;
   margin-bottom: 2px;
 }
+
+.chats {
+  padding-bottom: 50px;
+}
+
+.chat-form {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
