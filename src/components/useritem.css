@@ -1,0 +1,50 @@
+.user {
+  display: flex;
+  padding: 8px;
+  transition: all 0.5s;
+}
+
+.user:hover {
+  background-color: #e9ecef;
+}
+
+.user .info {
+  width: 100%;
+}
+.user .name {
+  font-weight: bold;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.add img:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+@keyframes changeBg {
+  from {
+    background-color: #afd2e9;
+  }
+  to {
+    background-color: #f1f1f1;
+  }
+}
+
+.adding {
+  animation: changeBg 0.8s infinite alternate-reverse;
+}
+
+.added {
+  background-color: #afd2e9 !important;
+}

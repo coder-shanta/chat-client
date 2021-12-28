@@ -13,7 +13,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="chat/:id" element={<Chat />} />
+            <Route path="chat/:groupId" element={<Chat />} />
           </Routes>
         </BrowserRouter>
       </div>

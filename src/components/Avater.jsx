@@ -1,14 +1,19 @@
 import "./Avater.css";
 import rc from "randomcolor";
 
-const Avater = ({ image, title, size = 50 }) => {
+const Avater = ({
+  image,
+  title,
+  size = 50,
+  color = rc({
+    luminosity: "dark",
+  }),
+}) => {
   const styles = {
     avater: {
       width: `${size}px`,
       height: `${size}px`,
-      backgroundColor: rc({
-        luminosity: "dark",
-      }),
+      backgroundColor: color,
       color: "white",
     },
   };

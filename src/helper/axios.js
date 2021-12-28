@@ -2,8 +2,10 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3000/";
 
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-  "token"
-)}`;
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (user !== null) {
+  axios.defaults.headers.Authorization = `Bearer ${user.token}`;
+}
 
 export default axios;

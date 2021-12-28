@@ -27,7 +27,7 @@ const Login = () => {
         const data = resp.data;
 
         if (data.success === true) {
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
           window.location.href = "/";
         } else {
           alert(data.message || "Login Failed. (Unknown error)");

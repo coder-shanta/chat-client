@@ -1,61 +1,104 @@
-import Avater from "../components/Avater";
-import addIcon from "../assets/plus-lg.svg";
+import { useRef, useState } from "react";
+import axios from "../helper/axios";
+import Loader from "../components/Loader";
+import UserItem from "../components/UserItem";
 
 const AddMamber = () => {
-  return (
-    <div className="modal fade" id="addMamberModel">
-      <div className="modal-dialog modal-dialog-scrollable">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Add mamber</h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <div className="modal-body">
-            <div className="users">
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">
-                  Search:
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="recipient-name"
-                  placeholder="Name or email address..."
-                  autoComplete="off"
-                />
-              </div>
+  const refInput = useRef(null);
 
-              <div className="user">
-                <Avater title="A" />
-                <div className="info">
-                  <div className="name">Shanto Miah</div>
-                  <div className="joined">Joined: 22/04/2011</div>
+  const [mambers, setMambers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [nf, setNf] = useState(false);
+
+  const handleSubmit = (e) => {
+    setNf(false);
+    setLoading(true);
+    const fd = new FormData(e.target);
+
+    axios
+      .get(`/mambers/search/${fd.get("search")}`)
+      .then((resp) => {
+        setLoading(false);
+
+        if (resp.data.length === 0) {
+          setNf(true);
+        } else {
+          setNf(false);
+          setMambers(resp.data);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+
+        alert(error.message);
+      });
+
+    e.preventDefault();
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="modal fade" id="addMamberModel">
+        <div className="modal-dialog modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Add mamber</h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="users">
+                <div className="mb-3">
+                  <label htmlFor="recipient-name" className="col-form-label">
+                    Search mamber:
+                  </label>
+                  <input
+                    ref={refInput}
+                    type="text"
+                    name="search"
+                    className="form-control"
+                    id="recipient-name"
+                    placeholder="Type name or email address..."
+                    autoComplete="off"
+                    autoFocus
+                    onChange={() => {
+                      setNf(false);
+                      setMambers([]);
+                    }}
+                  />
                 </div>
-                <div className="add">
-                  <img src={addIcon} alt="Add" />
-                </div>
+
+                {nf ? (
+                  <div className="alert alert-warning" role="alert">
+                    No user found with:
+                    <strong> {refInput.current.value}</strong>
+                  </div>
+                ) : null}
+
+                {mambers.map((user, idx) => (
+                  <UserItem user={user} key={idx} />
+                ))}
               </div>
             </div>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">
-              Search
-            </button>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Search
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

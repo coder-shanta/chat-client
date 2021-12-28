@@ -3,7 +3,7 @@ import GroupList from "../components/GroupList";
 
 const Home = () => {
   let navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
 
   const content = (
     <div>
@@ -27,7 +27,7 @@ const Home = () => {
     </div>
   );
 
-  return token ? content : <Navigate to="login" />;
+  return user ? content : <Navigate to="login" />;
 };
 
 export default Home;

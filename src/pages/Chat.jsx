@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import Avater from "../components/Avater";
 import "./Chat.css";
+import axios from "../helper/axios";
+import { useParams } from "react-router-dom";
 
 import ChatItem from "../components/ChatItem";
 import AddMamber from "../modals/AddMamber";
@@ -13,10 +15,21 @@ import penIcon from "../assets/pen-fill.svg";
 import sendIcon from "../assets/send.svg";
 
 const Chat = () => {
+  const params = useParams();
   const [chats, setChats] = useState([]);
+  const [mambers, setMambers] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
+
+    axios
+      .get(`/groups/${params.groupId}/mambers`)
+      .then((resp) => {
+        setMambers(resp.data);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }, []);
 
   const handleSubmit = (e) => {
@@ -44,7 +57,7 @@ const Chat = () => {
   return (
     <div>
       <AddMamber />
-      <ManageMamber />
+      <ManageMamber mambers={mambers} />
 
       <div className="header">
         <Avater
