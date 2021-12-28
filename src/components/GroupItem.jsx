@@ -13,8 +13,8 @@ const GroupItem = ({ group }) => {
       <div className="g-content">
         <div className="g-name">{group.name}</div>
         <div className="g-message">
-          <span className="g-mamber-name">Shanto: </span>
-          <span className="g-mamber-text">Happy new year 2022.</span>
+          <span className="g-mamber-name">Creator: </span>
+          <span className="g-mamber-text">Shanto Miah</span>
         </div>
       </div>
     </div>

@@ -11,10 +11,7 @@ const ChatItem = ({ sender, message, date, me }) => {
 
         <div className="my-message">
           <div className="my-date">{date}</div>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore, nisi
-          animi consequatur quae neque distinctio ipsum soluta, ut obcaecati
-          eius cum impedit ipsam voluptates tenetur error delectus consequuntur,
-          perspiciatis possimus.
+          {message}
         </div>
       </div>
     );

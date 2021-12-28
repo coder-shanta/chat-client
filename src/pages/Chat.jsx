@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Avater from "../components/Avater";
 import "./Chat.css";
@@ -13,31 +13,31 @@ import penIcon from "../assets/pen-fill.svg";
 import sendIcon from "../assets/send.svg";
 
 const Chat = () => {
+  const [chats, setChats] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
   }, []);
 
   const handleSubmit = (e) => {
+    window.scrollTo(0, document.body.scrollHeight + 500);
+
     const form = e.target;
     const fd = new FormData(form);
 
     const message = fd.get("message");
 
-    console.log(message);
-
-    // axios
-    //   .post("/groups", {
-    //     name: name,
-    //   })
-    //   .then((resp) => {
-    //     console.log(resp.data);
-    //   })
-    //   .catch((error) => {
-    //     alert(error.message);
-    //   });
+    setChats([
+      ...chats,
+      {
+        sender: "Shanto Miah",
+        message: message,
+        date: "22/05/2021 06:31 AM",
+        me: Math.floor(Math.random() * 2),
+      },
+    ]);
 
     form.reset();
-    window.scrollTo(0, document.body.scrollHeight);
     e.preventDefault();
   };
 
@@ -81,24 +81,15 @@ const Chat = () => {
 
       <main className="row justify-content-center">
         <div className="chats col-md-8">
-          <ChatItem
-            sender="Bot"
-            message="Happy New Year 2022."
-            date="22/05/2021 06:31 AM"
-          />
-
-          <ChatItem
-            sender="Shanto"
-            message="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum veniam quas facilis, laudantium est tempore corporis aliquid ullam nostrum possimus voluptatibus officia doloribus dicta, quod itaque placeat ratione distinctio animi. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo minus consectetur est, temporibus qui mollitia pariatur repellat eligendi quidem? Veniam voluptates modi nihil quos? Dolores necessitatibus aspernatur nam asperiores nisi! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius quis quaerat maiores rem corporis voluptas magni tenetur sint iusto at omnis quidem delectus error esse, illo earum, aspernatur, doloribus optio? Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, deserunt. Ipsum nihil pariatur vero nemo aliquam sint quis repellendus cum amet dolor, blanditiis quo? Excepturi quas impedit ratione nobis culpa."
-            date="22/05/2021 06:31 AM"
-          />
-
-          <ChatItem
-            sender="You"
-            message="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde nisi asperiores accusantium tempore minus itaque sunt natus aspernatur, ab provident reprehenderit recusandae harum amet eum eos, veniam dignissimos praesentium magni."
-            date="22/05/2021 06:31 AM"
-            me
-          />
+          {chats.map((chat, idx) => (
+            <ChatItem
+              key={idx}
+              sender={chat.sender}
+              message={chat.message}
+              date={chat.date}
+              me={chat.me}
+            />
+          ))}
         </div>
       </main>
 

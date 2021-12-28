@@ -1,6 +1,5 @@
 .chat {
   display: flex;
-  margin: 60px 0;
 }
 
 .chat .message {
@@ -42,8 +41,6 @@
 .my-chat {
   display: flex;
   flex-direction: row-reverse;
-
-  margin: 60px 0;
 }
 
 .my-chat .my-message {

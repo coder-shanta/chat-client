@@ -51,7 +51,13 @@
 }
 
 .chats {
-  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 140px;
+}
+
+.chats > div {
+  margin: 30px;
 }
 
 .chat-form {
