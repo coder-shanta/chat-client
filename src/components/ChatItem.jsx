@@ -6,10 +6,11 @@ const ChatItem = ({ sender, message, date, me }) => {
     return (
       <div className="my-chat">
         <div>
-          <Avater title={sender} />
+          <Avater title={sender.name} color={sender.avaterColor} />
         </div>
 
         <div className="my-message">
+          <div className="my-sender">You</div>
           <div className="my-date">{date}</div>
           {message}
         </div>
@@ -19,11 +20,11 @@ const ChatItem = ({ sender, message, date, me }) => {
     return (
       <div className="chat">
         <div>
-          <Avater title={sender} />
+          <Avater title={sender.name} color={sender.avaterColor} />
         </div>
 
         <div className="message">
-          <div className="sender">{sender}</div>
+          <div className="sender">{sender.name}</div>
           <div className="date">{date}</div>
           {message}
         </div>

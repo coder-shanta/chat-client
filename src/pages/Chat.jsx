@@ -15,13 +15,14 @@ import penIcon from "../assets/pen-fill.svg";
 import sendIcon from "../assets/send.svg";
 
 const Chat = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const params = useParams();
-  const [chats, setChats] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [mambers, setMambers] = useState([]);
 
   useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
-
+    // Get ALl Group mambers
     axios
       .get(`/groups/${params.groupId}/mambers`)
       .then((resp) => {
@@ -30,25 +31,49 @@ const Chat = () => {
       .catch((error) => {
         alert(error.message);
       });
+
+    // get All messages
+    axios
+      .get(`/groups/${params.groupId}/messages`)
+      .then((resp) => {
+        setMessages(resp.data);
+        window.scrollTo(0, document.body.scrollHeight);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }, []);
 
   const handleSubmit = (e) => {
-    window.scrollTo(0, document.body.scrollHeight + 500);
-
     const form = e.target;
     const fd = new FormData(form);
 
     const message = fd.get("message");
 
-    setChats([
-      ...chats,
-      {
-        sender: "Shanto Miah",
-        message: message,
-        date: "22/05/2021 06:31 AM",
-        me: Math.floor(Math.random() * 2),
-      },
-    ]);
+    axios
+      .post(`/groups/${params.groupId}/messages`, {
+        text: message,
+      })
+      .then((resp) => {
+        const data = resp.data;
+        if (data.success) {
+          const newM = {
+            sender: user,
+            text: message,
+            createdAt: "22/05/2021 06:31 AM",
+            me: true,
+          };
+
+          setMessages([...messages, newM]);
+
+          window.scrollTo(0, document.body.scrollHeight);
+        } else {
+          alert("Unknown error.");
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
 
     form.reset();
     e.preventDefault();
@@ -94,13 +119,13 @@ const Chat = () => {
 
       <main className="row justify-content-center">
         <div className="chats col-md-8">
-          {chats.map((chat, idx) => (
+          {messages.map((m, idx) => (
             <ChatItem
               key={idx}
-              sender={chat.sender}
-              message={chat.message}
-              date={chat.date}
-              me={chat.me}
+              sender={m.sender}
+              message={m.text}
+              date={m.createdAt}
+              me={user._id == m.sender._id}
             />
           ))}
         </div>
