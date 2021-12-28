@@ -38,6 +38,8 @@ const AddMamber = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {loading ? <Loader /> : null}
+
       <div className="modal fade" id="addMamberModel">
         <div className="modal-dialog modal-dialog-scrollable">
           <div className="modal-content">

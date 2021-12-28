@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Avater from "../components/Avater";
 import threeDotsIcon from "../assets/three-dots-vertical.svg";
 
@@ -10,11 +9,11 @@ const ManageMamber = ({ mambers }) => {
 
   useEffect(() => {
     mambers.forEach((m) => {
-      if (user._id == m._id) {
+      if (user._id === m._id) {
         setAdmin(m.admin);
       }
     });
-  }, [mambers]);
+  }, [mambers, user._id]);
 
   return (
     <div className="modal fade" id="manageMamberModel">
@@ -36,7 +35,7 @@ const ManageMamber = ({ mambers }) => {
                     <Avater title="A" color={mamber.avaterColor} />
                     <div className="info">
                       <div className="name">
-                        {mamber.name} {user.id == mamber._id ? "(You)" : null}
+                        {mamber.name} {user._id === mamber._id ? "(You)" : null}
                       </div>
                       <div className="joined">
                         {mamber.admin ? "Admin" : "Mamber"}
@@ -52,7 +51,6 @@ const ManageMamber = ({ mambers }) => {
                             type="button"
                             id="dropdownMenuButton1"
                             data-bs-toggle="dropdown"
-                            aria-expanded="false"
                           />
 
                           <ul
@@ -64,7 +62,7 @@ const ManageMamber = ({ mambers }) => {
                                 className={`dropdown-item ${
                                   mamber.admin ? null : "disabled"
                                 }`}
-                                href="#"
+                                href="#mm"
                               >
                                 Make Mamber
                               </a>
@@ -74,13 +72,13 @@ const ManageMamber = ({ mambers }) => {
                                 className={`dropdown-item ${
                                   mamber.admin ? "disabled" : null
                                 }`}
-                                href="#"
+                                href="#ma"
                               >
                                 Make Admin
                               </a>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="#">
+                              <a className="dropdown-item" href="#r">
                                 Remove
                               </a>
                             </li>
