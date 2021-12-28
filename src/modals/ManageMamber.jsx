@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Avater from "../components/Avater";
 import threeDotsIcon from "../assets/three-dots-vertical.svg";
-import Loader from "../components/Loader";
 
 const ManageMamber = ({ mambers }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -11,7 +10,7 @@ const ManageMamber = ({ mambers }) => {
 
   useEffect(() => {
     mambers.forEach((m) => {
-      if (user.id == m._id) {
+      if (user._id == m._id) {
         setAdmin(m.admin);
       }
     });

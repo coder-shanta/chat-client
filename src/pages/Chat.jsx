@@ -42,7 +42,7 @@ const Chat = () => {
       .catch((error) => {
         alert(error.message);
       });
-  }, []);
+  }, [params.groupId]);
 
   const handleSubmit = (e) => {
     const form = e.target;
@@ -125,7 +125,7 @@ const Chat = () => {
               sender={m.sender}
               message={m.text}
               date={m.createdAt}
-              me={user._id == m.sender._id}
+              me={user._id === m.sender._id}
             />
           ))}
         </div>
