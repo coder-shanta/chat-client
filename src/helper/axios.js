@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "https://a4w74e.herokuapp.com/";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
