@@ -81,7 +81,6 @@ const Login = () => {
                       type="email"
                       className="form-control"
                       placeholder="Enter your email..."
-                      defaultValue="test@gmail.com"
                     />
                   </div>
                   <div className="mb-3">
@@ -91,7 +90,6 @@ const Login = () => {
                       type="password"
                       className="form-control"
                       placeholder="Enter your password..."
-                      defaultValue="12345678"
                     />
                   </div>
 

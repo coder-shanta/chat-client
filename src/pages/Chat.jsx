@@ -189,7 +189,6 @@ const Chat = () => {
                   type="text"
                   className="form-control"
                   placeholder="Type you message..."
-                  autoFocus
                   autoComplete="off"
                 />
                 <button type="submit" className="btn btn-outline-primary">

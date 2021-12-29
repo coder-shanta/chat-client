@@ -65,7 +65,6 @@ const AddMamber = () => {
                     id="recipient-name"
                     placeholder="Type name or email address..."
                     autoComplete="off"
-                    autoFocus
                     onChange={() => {
                       setNf(false);
                       setMambers([]);

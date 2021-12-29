@@ -35,7 +35,7 @@ const Register = () => {
           localStorage.setItem("user", JSON.stringify(data.user));
           window.location.href = "/";
         } else {
-          alert(data.message || "Login Failed. (Unknown error)");
+          alert(JSON.stringify(data.error));
         }
       })
       .catch((error) => {
@@ -67,7 +67,6 @@ const Register = () => {
                       type="text"
                       className="form-control"
                       placeholder="Enter your full name..."
-                      defaultValue="Shanta Miah"
                     />
                   </div>
                   <div className="mb-3">
@@ -77,7 +76,7 @@ const Register = () => {
                       type="email"
                       className="form-control"
                       placeholder="Enter your email..."
-                      defaultValue="test@gmail.com"
+                      autoComplete="off"
                     />
                   </div>
                   <div className="mb-3">
@@ -87,7 +86,7 @@ const Register = () => {
                       type="password"
                       className="form-control"
                       placeholder="Enter your password..."
-                      defaultValue="12345678"
+                      autoComplete="off"
                     />
                   </div>
 
