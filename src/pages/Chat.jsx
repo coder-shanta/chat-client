@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useContext } from "react";
 import Avater from "../components/Avater";
 import "./Chat.css";
 import axios from "../helper/axios";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, useSearchParams } from "react-router-dom";
 import { SocketContext } from "../context/socket";
 
 import ChatItem from "../components/ChatItem";
@@ -22,6 +22,8 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 const Chat = () => {
   const params = useParams();
+  const [searchParams] = useSearchParams();
+
   const socket = useContext(SocketContext);
   const [loading, setLoading] = useState(true);
   const [group, setGroup] = useState({
@@ -68,11 +70,21 @@ const Chat = () => {
 
   useEffect(() => {
     axios
-      .get(`/groups/${params.groupId}`)
+      .get(`/groups/${params.groupId}`, {
+        params: {
+          limit: searchParams.get("limit") || 10,
+          skip: searchParams.get("skip") || 0,
+        },
+      })
       .then((resp) => {
         const data = resp.data;
         setLoading(false);
-        setGroup(data);
+
+        if (data.success) {
+          setGroup(data.data);
+        } else {
+          alert(data.message);
+        }
       })
       .catch(() => setLoading(false));
   }, []);

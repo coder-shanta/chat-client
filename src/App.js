@@ -2,6 +2,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
+import NotFound from "./pages/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -18,6 +19,7 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="chat/:groupId" element={<Chat />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </SocketContext.Provider>
