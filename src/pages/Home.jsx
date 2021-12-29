@@ -1,9 +1,10 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import GroupList from "../components/GroupList";
 
+const user = JSON.parse(localStorage.getItem("user"));
+
 const Home = () => {
   let navigate = useNavigate();
-  const user = localStorage.getItem("user");
 
   const content = (
     <div>

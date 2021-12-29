@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "../helper/axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import Divider from "../components/Divider";
 import Loader from "../components/Loader";
+
+const user = JSON.parse(localStorage.getItem("user"));
 
 const Login = () => {
   let [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ const Login = () => {
     e.preventDefault();
   };
 
-  return (
+  const content = (
     <>
       {loading ? <Loader /> : null}
 
@@ -94,6 +96,8 @@ const Login = () => {
       </div>
     </>
   );
+
+  return user ? <Navigate to="/" /> : content;
 };
 
 export default Login;

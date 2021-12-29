@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Avater from "../components/Avater";
 import "./Chat.css";
 import axios from "../helper/axios";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 
 import ChatItem from "../components/ChatItem";
 import AddMamber from "../modals/AddMamber";
@@ -95,7 +95,7 @@ const Chat = () => {
     e.preventDefault();
   };
 
-  return (
+  const content = (
     <div>
       <AddMamber />
       <ManageMamber mambers={mambers} />
@@ -170,6 +170,8 @@ const Chat = () => {
       </form>
     </div>
   );
+
+  return user ? content : <Navigate to="/login" />;
 };
 
 export default Chat;
