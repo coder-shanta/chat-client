@@ -53,7 +53,6 @@ const GroupCreator = ({ afterCreated }) => {
             type="text"
             className="form-control"
             placeholder="Enter group name..."
-            autoFocus
             autoComplete="off"
           />
           <button type="submit" className="btn btn-outline-primary">
