@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 
 import Avater from "../components/Avater";
 import "./Chat.css";
 import axios from "../helper/axios";
 import { useParams, Navigate } from "react-router-dom";
+import { SocketContext } from "../context/socket";
 
 import ChatItem from "../components/ChatItem";
 import AddMamber from "../modals/AddMamber";
@@ -13,55 +14,82 @@ import addIcon from "../assets/plus-lg.svg";
 import peopleIcon from "../assets/people.svg";
 import penIcon from "../assets/pen-fill.svg";
 import sendIcon from "../assets/send.svg";
+import Loader from "../components/Loader";
 
-import io from "socket.io-client";
+import moment from "moment";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const socketServerUrl =
-  process.env.REACT_APP_SOCKET_SERVER_URL || "http://localhost:3000";
-
-const socket = user
-  ? io.connect(socketServerUrl, {
-      auth: {
-        token: user.token,
-      },
-    })
-  : null;
-
 const Chat = () => {
   const params = useParams();
-  const [messages, setMessages] = useState([]);
-  const [mambers, setMambers] = useState([]);
+  const socket = useContext(SocketContext);
+  const [loading, setLoading] = useState(true);
+  const [group, setGroup] = useState({
+    name: "Fake name",
+    mambers: [],
+    messages: [],
+  });
 
-  //scroll to bottom
+  const handleMessageRecived = useCallback(
+    (msg) => {
+      setGroup({
+        ...group,
+        messages: [...group.messages, msg],
+      });
+    },
+    [group]
+  );
+
+  const handleJoinRoom = useCallback(() => {
+    socket.emit("join", params.groupId);
+  }, []);
+
+  const handleLeaveRoom = useCallback(() => {
+    socket.emit("leave", params.groupId);
+  }, []);
+
+  const handleSendMessage = useCallback((text) => {
+    socket.emit("sendMessage", {
+      from: user._id,
+      to: params.groupId,
+      text: text,
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("getMessage", handleMessageRecived);
+
+    return () => {
+      // before the component is destroyed
+      // unbind all event handlers used in this component
+      socket.off("getMessage", handleMessageRecived);
+    };
+  }, [socket, handleMessageRecived, handleSendMessage]);
+
+  useEffect(() => {
+    axios
+      .get(`/groups/${params.groupId}`)
+      .then((resp) => {
+        const data = resp.data;
+        setLoading(false);
+        setGroup(data);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
-  }, [messages]);
+  }, [group.messages]);
 
   useEffect(() => {
-    // Get ALl Group mambers
-    axios.get(`/groups/${params.groupId}/mambers`).then((resp) => {
-      setMambers(resp.data);
-    });
+    handleJoinRoom();
+  }, []);
 
-    axios.get(`/groups/${params.groupId}/messages`).then((resp) => {
-      setMessages(resp.data);
-    });
-
-    // get group info with messages
-  }, [params.groupId]);
-
-  // join this group room
   useEffect(() => {
-    socket.on("connect", () => {
-      socket.emit("join", params.groupId);
-
-      socket.on("getMessage", (msg) => {
-        setMessages([...messages, msg]);
-      });
-    });
-  }, [params.groupId]);
+    return () => {
+      handleLeaveRoom();
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     const form = e.target;
@@ -69,19 +97,18 @@ const Chat = () => {
 
     const message = fd.get("message");
 
-    // send message via socket
-    socket.emit("sendMessage", {
-      from: user._id,
-      to: params.groupId,
-      text: message,
-    });
-    const newM = {
+    handleSendMessage(message);
+
+    const yourMessage = {
       sender: user,
       text: message,
-      createdAt: "22/05/2021 06:31 AM",
+      createdAt: moment().format(),
     };
 
-    setMessages([...messages, newM]);
+    setGroup({
+      ...group,
+      messages: [...group.messages, yourMessage],
+    });
 
     form.reset();
     e.preventDefault();
@@ -89,8 +116,9 @@ const Chat = () => {
 
   const content = (
     <div>
+      {loading ? <Loader /> : null}
       <AddMamber />
-      <ManageMamber mambers={mambers} />
+      <ManageMamber mambers={group.mambers} />
 
       <div className="header">
         <Avater
@@ -100,7 +128,7 @@ const Chat = () => {
         />
 
         <div className="group-name">
-          <h2>Friends Of Friends</h2>
+          <h2>{group.name}</h2>
 
           <img className="edit-icon" alt="edit" src={penIcon} />
         </div>
@@ -127,7 +155,7 @@ const Chat = () => {
 
       <main className="row justify-content-center">
         <div className="chats col-md-8">
-          {messages.map((m, idx) => (
+          {group.messages.map((m, idx) => (
             <ChatItem
               key={idx}
               sender={m.sender}

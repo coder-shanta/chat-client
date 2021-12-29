@@ -1,11 +1,9 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import GroupList from "../components/GroupList";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
 const Home = () => {
-  let navigate = useNavigate();
-
   const content = (
     <div>
       <h1>Advanced Group Chat App</h1>
@@ -20,7 +18,7 @@ const Home = () => {
         className="btn btn-sm btn-danger"
         onClick={() => {
           localStorage.clear();
-          navigate("/login");
+          window.location.href = "/login";
         }}
       >
         Logout

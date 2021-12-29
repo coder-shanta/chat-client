@@ -1,4 +1,5 @@
 import Avater from "../components/Avater";
+import moment from "moment";
 
 import "./chatitem.css";
 const ChatItem = ({ sender, message, date, me }) => {
@@ -10,8 +11,9 @@ const ChatItem = ({ sender, message, date, me }) => {
         </div>
 
         <div className="my-message">
-          <div className="my-sender">You</div>
-          <div className="my-date">{date}</div>
+          <div className="my-date">
+            {moment(date, "YYYY-MM-DDTHH:mm:ss. sssZ").fromNow()}
+          </div>
           {message}
         </div>
       </div>
@@ -25,7 +27,9 @@ const ChatItem = ({ sender, message, date, me }) => {
 
         <div className="message">
           <div className="sender">{sender.name}</div>
-          <div className="date">{date}</div>
+          <div className="date">
+            {moment(date, "YYYY-MM-DDTHH:mm:ss. sssZ").fromNow()}
+          </div>
           {message}
         </div>
       </div>
