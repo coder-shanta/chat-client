@@ -19,7 +19,7 @@ import io from "socket.io-client";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const socketServerUrl =
-  process.env.SOCKET_SERVER_URL || "http://localhost:3000";
+  process.env.REACT_APP_SOCKET_SERVER_URL || "http://localhost:3000";
 
 const socket = user
   ? io.connect(socketServerUrl, {
