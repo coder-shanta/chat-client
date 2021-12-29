@@ -14,7 +14,7 @@ const GroupItem = ({ group }) => {
         <div className="g-name">{group.name}</div>
         <div className="g-message">
           <span className="g-mamber-name">Creator: </span>
-          <span className="g-mamber-text">Shanto Miah</span>
+          <span className="g-mamber-text">{group.creator.name}</span>
         </div>
       </div>
     </div>

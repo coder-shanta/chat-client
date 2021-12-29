@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "../helper/axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 
 import Divider from "../components/Divider";
 import Loader from "../components/Loader";
@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const Login = () => {
+  let [params] = useSearchParams();
   let [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -57,6 +58,21 @@ const Login = () => {
               <div className="card-header">Login with email address</div>
 
               <div className="card-body">
+                {params.get("msg") ? (
+                  <div
+                    className="alert alert-warning alert-dismissible fade show"
+                    role="alert"
+                  >
+                    {params.get("msg")}
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                ) : null}
+
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Email address</label>

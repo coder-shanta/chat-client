@@ -41,35 +41,27 @@ const Chat = () => {
 
   useEffect(() => {
     // Get ALl Group mambers
-    axios
-      .get(`/groups/${params.groupId}/mambers`)
-      .then((resp) => {
-        setMambers(resp.data);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    axios.get(`/groups/${params.groupId}/mambers`).then((resp) => {
+      setMambers(resp.data);
+    });
 
-    axios
-      .get(`/groups/${params.groupId}/messages`)
-      .then((resp) => {
-        setMessages(resp.data);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    axios.get(`/groups/${params.groupId}/messages`).then((resp) => {
+      setMessages(resp.data);
+    });
+
+    // get group info with messages
   }, [params.groupId]);
 
   // join this group room
   useEffect(() => {
     socket.on("connect", () => {
       socket.emit("join", params.groupId);
+
+      socket.on("getMessage", (msg) => {
+        setMessages([...messages, msg]);
+      });
     });
   }, [params.groupId]);
-
-  socket.on("getMessage", (msg) => {
-    setMessages([...messages, msg]);
-  });
 
   const handleSubmit = (e) => {
     const form = e.target;

@@ -19,7 +19,6 @@ const GroupList = () => {
       })
       .catch((error) => {
         setLoading(false);
-        alert(error.message);
       });
   }, []);
 
