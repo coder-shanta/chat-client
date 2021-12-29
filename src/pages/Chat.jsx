@@ -44,19 +44,22 @@ const Chat = () => {
 
   const handleJoinRoom = useCallback(() => {
     socket.emit("join", params.groupId);
-  }, []);
+  }, [socket, params.groupId]);
 
   const handleLeaveRoom = useCallback(() => {
     socket.emit("leave", params.groupId);
-  }, []);
+  }, [socket, params.groupId]);
 
-  const handleSendMessage = useCallback((text) => {
-    socket.emit("sendMessage", {
-      from: user._id,
-      to: params.groupId,
-      text: text,
-    });
-  }, []);
+  const handleSendMessage = useCallback(
+    (text) => {
+      socket.emit("sendMessage", {
+        from: user._id,
+        to: params.groupId,
+        text: text,
+      });
+    },
+    [socket, params.groupId]
+  );
 
   useEffect(() => {
     socket.on("getMessage", handleMessageRecived);
@@ -87,7 +90,7 @@ const Chat = () => {
         }
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [searchParams, params.groupId]);
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -95,13 +98,13 @@ const Chat = () => {
 
   useEffect(() => {
     handleJoinRoom();
-  }, []);
+  }, [handleJoinRoom]);
 
   useEffect(() => {
     return () => {
       handleLeaveRoom();
     };
-  }, []);
+  }, [handleLeaveRoom]);
 
   const handleSubmit = (e) => {
     const form = e.target;
