@@ -52,7 +52,7 @@ const Register = () => {
           <div className="col-md-8 py-5">
             <h1 className="mb-4 text-center">Group Chat app demo</h1>
 
-            <div className="card shadow">
+            <div className="card">
               <div className="card-header">
                 Register, No verification needed.
               </div>
