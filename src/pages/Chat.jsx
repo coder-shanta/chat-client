@@ -14,12 +14,30 @@ import peopleIcon from "../assets/people.svg";
 import penIcon from "../assets/pen-fill.svg";
 import sendIcon from "../assets/send.svg";
 
-const Chat = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+import io from "socket.io-client";
 
+const user = JSON.parse(localStorage.getItem("user"));
+
+const socketServerUrl =
+  process.env.SOCKET_SERVER_URL || "http://localhost:3000";
+
+const socket = user
+  ? io.connect(socketServerUrl, {
+      auth: {
+        token: user.token,
+      },
+    })
+  : null;
+
+const Chat = () => {
   const params = useParams();
   const [messages, setMessages] = useState([]);
   const [mambers, setMambers] = useState([]);
+
+  //scroll to bottom
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [messages]);
 
   useEffect(() => {
     // Get ALl Group mambers
@@ -32,17 +50,26 @@ const Chat = () => {
         alert(error.message);
       });
 
-    // get All messages
     axios
       .get(`/groups/${params.groupId}/messages`)
       .then((resp) => {
         setMessages(resp.data);
-        window.scrollTo(0, document.body.scrollHeight);
       })
       .catch((error) => {
         alert(error.message);
       });
   }, [params.groupId]);
+
+  // join this group room
+  useEffect(() => {
+    socket.on("connect", () => {
+      socket.emit("join", params.groupId);
+    });
+  }, [params.groupId]);
+
+  socket.on("getMessage", (msg) => {
+    setMessages([...messages, msg]);
+  });
 
   const handleSubmit = (e) => {
     const form = e.target;
@@ -50,30 +77,19 @@ const Chat = () => {
 
     const message = fd.get("message");
 
-    axios
-      .post(`/groups/${params.groupId}/messages`, {
-        text: message,
-      })
-      .then((resp) => {
-        const data = resp.data;
-        if (data.success) {
-          const newM = {
-            sender: user,
-            text: message,
-            createdAt: "22/05/2021 06:31 AM",
-            me: true,
-          };
+    // send message via socket
+    socket.emit("sendMessage", {
+      from: user._id,
+      to: params.groupId,
+      text: message,
+    });
+    const newM = {
+      sender: user,
+      text: message,
+      createdAt: "22/05/2021 06:31 AM",
+    };
 
-          setMessages([...messages, newM]);
-
-          window.scrollTo(0, document.body.scrollHeight);
-        } else {
-          alert("Unknown error.");
-        }
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    setMessages([...messages, newM]);
 
     form.reset();
     e.preventDefault();

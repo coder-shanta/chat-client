@@ -1,7 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://a4w74e.herokuapp.com/";
-// axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = process.env.API_BASE_URL || "http://localhost:3000";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
